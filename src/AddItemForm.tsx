@@ -1,8 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemFormPropsType = {
-    addTask: (todolistId: string, title: string) => void
-    todolistId: string
+    addItem: (title: string) => void
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
@@ -13,7 +12,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
             setError("Title is required")
             return;
         }
-        props.addTask(props.todolistId, newTaskTitle.trim());
+        props.addItem(newTaskTitle.trim());
         setNewTaskTitle(" ");
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +22,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
         setError(null)
         if (e.charCode === 13) {
             if (newTaskTitle.trim() !== "") {
-                props.addTask(props.todolistId, newTaskTitle);
+                props.addItem( newTaskTitle);
                 setNewTaskTitle(" ");
             } else {
                 setError("Title is required")
