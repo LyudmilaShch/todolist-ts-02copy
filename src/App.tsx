@@ -4,7 +4,7 @@ import {TasksType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import {AppBar, Button, Container, Grid, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 
 export type FilterValuesType = "all" | "completed" | "active";
@@ -158,10 +158,10 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container>
+                <Grid container style={{ padding: "10px"}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     {todolists.map((tl) => {
 
                         let tasksForTodolist = tasksObj[tl.id];
@@ -172,28 +172,34 @@ function App() {
                             tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false)
                         }
 
-                        return <Todolist title={tl.title}
-                                         key={tl.id}
-                                         todolistId={tl.id}
-                                         xz={100200}
-                                         tasks={tasksForTodolist}
-                                         removeTask={removeTask}
-                                         changeFilter={changeFilter}
-                                         addTask={addTask}
-                                         changeTasksStatus={changeStatus}
-                                         changeTasksTitle={changeTaskTitle}
-                                         filter={tl.filter}
-                                         removeTodolist={removeTodolist}
-                                         changeTodolistTitle={changeTodolistTitle}
-                        />
+                        return <Grid item>
+                            <Paper style={{ padding: "10px"}}>
+                                <Todolist title={tl.title}
+                                          key={tl.id}
+                                          todolistId={tl.id}
+                                          xz={100200}
+                                          tasks={tasksForTodolist}
+                                          removeTask={removeTask}
+                                          changeFilter={changeFilter}
+                                          addTask={addTask}
+                                          changeTasksStatus={changeStatus}
+                                          changeTasksTitle={changeTaskTitle}
+                                          filter={tl.filter}
+                                          removeTodolist={removeTodolist}
+                                          changeTodolistTitle={changeTodolistTitle}
+                                />
+                            </Paper>
+                        </Grid>
 
                     })}
                 </Grid>
 
-                {/* <Todolist title={title2} tasksObj={tasks2}/>*/}
+                {/* <Todolist title={title2} tasksObj={tasks2}/>*/
+                }
             </Container>
         </div>
-    );
+    )
+        ;
 }
 
 

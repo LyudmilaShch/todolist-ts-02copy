@@ -65,7 +65,7 @@ export const Todolist = (props: TodolistProps) => {
                         }
 
 
-                        return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                        return <div key={t.id} className={t.isDone ? "is-done" : ""}>
                             <Checkbox
                                    onChange={onChangeStatusHandler}
                                    checked={t.isDone}/>
@@ -75,7 +75,7 @@ export const Todolist = (props: TodolistProps) => {
                                 <Delete />
                             </IconButton>
 
-                        </li>
+                        </div>
                     })
                 }
             </ul>
