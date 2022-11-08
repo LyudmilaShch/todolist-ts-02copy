@@ -1,10 +1,10 @@
 import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
 import {
-    AddTodolistAC,
-    ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    RemoveTodolistAC,
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
     todolistsReducer
 } from "./todolists-reducer";
 
@@ -16,7 +16,7 @@ test ('correct todolist should be removed', () => {
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
-    const endState = todolistsReducer(startState, RemoveTodolistAC(todolistId1))
+    const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
 
     expect(endState.length).toBe(1);
 
@@ -32,7 +32,7 @@ test ('correct todolist should be added', () => {
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
-    const endState = todolistsReducer(startState, AddTodolistAC(newTodolistTitle))
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle))
 
     expect(endState.length).toBe(3);
     expect(endState[2].title).toBe(newTodolistTitle)
@@ -49,7 +49,7 @@ test ('correct todolist should change its name', () => {
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
-    const action = ChangeTodolistTitleAC(todolistId2, newTodolistTitle)
+    const action = changeTodolistTitleAC(todolistId2, newTodolistTitle)
 
     const endState = todolistsReducer(startState, action)
 
@@ -68,7 +68,7 @@ test ('correct filter of todolist should be changed', () => {
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
-    const action = ChangeTodolistFilterAC(todolistId2, newFilter)
+    const action = changeTodolistFilterAC(todolistId2, newFilter)
 
     const endState = todolistsReducer(startState, action)
 
