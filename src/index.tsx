@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import AppWithRedux from "./AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
-import AppWithReducers from "./AppWithReducers"; //следит за стабильностью интернета
 
 ReactDOM.render(
     <Provider store={store}>
