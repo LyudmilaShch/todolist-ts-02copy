@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {TasksType, Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -29,27 +29,29 @@ export type TasksStateType = {
     [key: string]: Array<TasksType>
 }
 
+
 function AppWithRedux() {
+    console.log("AppWithRedux is called")
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists)
 
-    function changeFilter(todolistId: string, value: FilterValuesType) {
+    const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
         dispatch(changeTodolistFilterAC(value, todolistId));
-    }
+    }, [dispatch])
 
-    let removeTodolist = (todolistId: string) => {
+    let removeTodolist = useCallback((todolistId: string) => {
         const action = removeTodolistAC(todolistId)
         dispatch(action)
-    }
+    }, [dispatch])
 
-    let changeTodolistTitle = (todolistId: string, newTitle: string) => {
+    let changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(newTitle, todolistId))
-    }
+    }, [dispatch])
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
-    }
+    }, [dispatch])
 
     return (
 
@@ -71,7 +73,6 @@ function AppWithRedux() {
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map((tl) => {
-
 
 
                         return <Grid item>
