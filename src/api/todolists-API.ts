@@ -82,11 +82,12 @@ export const todolistsAPI = {
     },
     updateTaskTitle(todolistId: string, taskId: string, title: string) {
 
-        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`,{title: title}, settings)
+        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: title}, settings)
     },
-    // updateTaskTitle(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+
+    // updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
     //
-    //     return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`,{title: model}, settings)
+    //     return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {model: model}, settings)
     // },
 
 
