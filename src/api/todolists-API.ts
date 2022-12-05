@@ -39,16 +39,16 @@ export type TaskType = {
     addedDate: string
 }
 export type UpdateTaskModelType = {
-    title: string
-    description: string
+    title?: string | undefined
+    description?: string | undefined
     completed: boolean
     status: number
     priority: number
-    startDate: string
-    deadline: string
+    startDate?: string | undefined
+    deadline?: string | undefined
 }
 
-type GetTasksResponse = {
+export type GetTasksResponse = {
     items: Array<TaskType>,
     error: string,
     totalCount: number
@@ -85,10 +85,18 @@ export const todolistsAPI = {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: title}, settings)
     },
 
-    // updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    //
-    //     return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {model: model}, settings)
-    // },
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+
+        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {
+            title: model.title,
+            description: model.description,
+            completed: model.completed,
+            status: model.status,
+            priority: model.priority,
+            startDate: model.startDate,
+            deadline: model.deadline
+        }, settings)
+    },
 
 
 }
