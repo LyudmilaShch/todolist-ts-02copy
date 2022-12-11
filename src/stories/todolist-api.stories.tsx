@@ -95,9 +95,9 @@ export const GetTasks = () => {
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     const [todolistId, setTodolistId] = useState<any>(null)
-    const [title, setTitle] = useState<any>(null)
+    const [taskTitle, setTaskTitle] = useState<any>(null)
     const createTask = () => {
-        todolistsAPI.createTask(todolistId, title)
+        todolistsAPI.createTask(todolistId, taskTitle)
             .then((res) => {
                 setState(res.data)
             })
@@ -106,8 +106,8 @@ export const CreateTask = () => {
         <input placeholder={'todolistId'} value={todolistId} onChange={(e) => {
             setTodolistId(e.currentTarget.value)
         }}/>
-        <input placeholder={'title'} value={title} onChange={(e) => {
-            setTitle(e.currentTarget.value)
+        <input placeholder={'taskTitle'} value={taskTitle} onChange={(e) => {
+            setTaskTitle(e.currentTarget.value)
         }}/>
         <button onClick={createTask}>create task</button>
     </div>

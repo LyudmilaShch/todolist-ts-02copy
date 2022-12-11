@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {FilterValuesType} from "./AppWithRedux";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditanleSpan";
 import {Button, IconButton} from "@material-ui/core";
@@ -9,7 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {addTaskAC} from "./state/tasks-reducer";
 import {Task} from "./Task";
-
+import {TaskStatuses, TaskType} from "./api/todolists-API";
+import {FilterValuesType} from "./state/todolists-reducer";
 
 export type TodolistProps = {
     title: string,
@@ -21,17 +21,9 @@ export type TodolistProps = {
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
 }
 
-export type TasksType = {
-    id: string,
-    title: string,
-    isDone: boolean,
-    newValue?: boolean
-}
-
-
 export const Todolist = React.memo((props: TodolistProps) => {
     console.log("Todolist is called")
-    const tasks = useSelector<AppRootState, Array<TasksType>>(state => state.tasks[props.todolistId])
+    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[props.todolistId])
     const dispatch = useDispatch()
 
 
@@ -53,10 +45,10 @@ export const Todolist = React.memo((props: TodolistProps) => {
     let allTodolistTasks = tasks;
     let tasksForTodolist = allTodolistTasks;
     if (props.filter === "completed") {
-        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true)
+        tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.Completed)
     }
     if (props.filter === "active") {
-        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false)
+        tasksForTodolist = allTodolistTasks.filter(t => t.status  === TaskStatuses.New)
     }
     return (
         <div>

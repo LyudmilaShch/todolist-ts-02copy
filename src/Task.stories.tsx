@@ -1,8 +1,8 @@
 import React from 'react';
-import {AddItemForm} from "./AddItemForm";
 import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
 import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";
+import {TaskPriorities, TaskStatuses} from "./api/todolists-API";
 
 export default {
     title: 'Task Component',
@@ -15,11 +15,17 @@ const callback = action("Button 'add' was pressed inside the form");
 export const TaskBaseExample = (props: any) => {
     return <>
         <Task
-            task={{id: '1', isDone: true, title: "title"}}
+            task={{
+                id: '1', completed: true, title: "title", status: TaskStatuses.New, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', description: '', addedDate: '', order: 0, todoListId: 'todolistId1'
+            }}
             todolistId={'Todolist1'}
         />
         <Task
-            task={{id: '2', isDone: false, title: "title2"}}
+            task={{
+                id: '2', completed: false, title: "title2", status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', description: '', addedDate: '', order: 0, todoListId: 'todolistId1'
+            }}
             todolistId={'Todolist2'}
         />
     </>
