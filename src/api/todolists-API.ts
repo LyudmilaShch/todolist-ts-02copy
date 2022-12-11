@@ -40,6 +40,7 @@ export enum TaskPriorities {
     Later = 4
 }
 
+
 export type TaskType = {
     description: string
     title: string
