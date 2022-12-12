@@ -22,6 +22,7 @@ export type TodolistProps = {
     changeTaskStatus: (id: string, completed: boolean, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
 }
 
 export const Todolist = React.memo((props: TodolistProps) => {
@@ -36,15 +37,16 @@ export const Todolist = React.memo((props: TodolistProps) => {
     const removeTodolist = useCallback(() => {
         props.removeTodolist(props.todolistId);
     }, [props.removeTodolist, props.todolistId])
+    const addTask = useCallback((title: string) => {
+        props.addTask(title, props.todolistId)
+    }, [props.addTask, props.todolistId])
 
     useEffect(() => {
         // @ts-ignore
         dispatch(fetchTasksTC(props.todolistId))
     })
 
-    const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(title, props.todolistId));
-    }, [props.todolistId])
+
 
     const changeTodolistTitle = useCallback((newTitle: string) => {
 
