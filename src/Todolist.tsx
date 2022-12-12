@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditanleSpan";
@@ -6,7 +6,7 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {addTaskAC} from "./state/tasks-reducer";
+import {addTaskAC, fetchTasksTC} from "./state/tasks-reducer";
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/todolists-API";
 import {FilterValuesType} from "./state/todolists-reducer";
@@ -19,6 +19,9 @@ export type TodolistProps = {
     filter: FilterValuesType
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
+    changeTaskStatus: (id: string, completed: boolean, todolistId: string) => void
+    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
+    removeTask: (taskId: string, todolistId: string) => void
 }
 
 export const Todolist = React.memo((props: TodolistProps) => {
@@ -33,6 +36,12 @@ export const Todolist = React.memo((props: TodolistProps) => {
     const removeTodolist = useCallback(() => {
         props.removeTodolist(props.todolistId);
     }, [props.removeTodolist, props.todolistId])
+
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(fetchTasksTC(props.todolistId))
+    })
+
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, props.todolistId));
     }, [props.todolistId])
@@ -64,6 +73,9 @@ export const Todolist = React.memo((props: TodolistProps) => {
                         task={t}
                         todolistId={props.todolistId}
                         key={t.id}
+                        removeTask={props.removeTask}
+                        changeTaskTitle={props.changeTaskTitle}
+                        changeTaskStatus={props.changeTaskStatus}
                     />)
                 }
             </ul>

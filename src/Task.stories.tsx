@@ -20,13 +20,19 @@ export const TaskBaseExample = (props: any) => {
                 startDate: '', deadline: '', description: '', addedDate: '', order: 0, todoListId: 'todolistId1'
             }}
             todolistId={'Todolist1'}
-        />
+            removeTask={props.removeTask}
+            changeTaskTitle={props.changeTaskTitle}
+            changeTaskStatus={props.changeTaskStatus}
+       />
         <Task
             task={{
                 id: '2', completed: false, title: "title2", status: TaskStatuses.Completed, priority: TaskPriorities.Low,
                 startDate: '', deadline: '', description: '', addedDate: '', order: 0, todoListId: 'todolistId1'
             }}
             todolistId={'Todolist2'}
+            removeTask={props.removeTask}
+            changeTaskTitle={props.changeTaskTitle}
+            changeTaskStatus={props.changeTaskStatus}
         />
     </>
 }
