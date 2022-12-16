@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux'
 import { v1 } from 'uuid'
 import {todolistsReducer} from "../state/todolists-reducer";
-import {AppRootState} from "../state/store";
+import {AppRootStateType} from "../state/store";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-API";
 
 
@@ -39,7 +39,7 @@ const initialGlobalState = {
         }
 }
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState)
+export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType)
 
 export const ReduxStoreProviderDecorator = (storyFn: any) => (
     <Provider

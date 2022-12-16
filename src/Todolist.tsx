@@ -5,21 +5,21 @@ import {EditableSpan} from "./EditanleSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "./state/store";
+import {AppDispatch, AppRootStateType, useAppSelector} from "./state/store";
 import {addTaskAC, fetchTasksTC} from "./state/tasks-reducer";
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/todolists-API";
 import {FilterValuesType} from "./state/todolists-reducer";
+import {TasksStateType} from "./AppWithRedux";
 
 export type TodolistProps = {
     title: string,
     todolistId: string,
-    xz?: number,
     changeFilter: (todolistId: string, value: FilterValuesType) => void
     filter: FilterValuesType
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
-    changeTaskStatus: (id: string, completed: boolean, todolistId: string) => void
+    changeTaskStatus: (id: string, status: number, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
@@ -27,8 +27,8 @@ export type TodolistProps = {
 
 export const Todolist = React.memo((props: TodolistProps) => {
     console.log("Todolist is called")
-    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[props.todolistId])
-    const dispatch = useDispatch()
+    const tasks = useAppSelector<Array<TaskType>>(state => state.tasks[props.todolistId])
+    const dispatch = AppDispatch()
 
 
     const onAllClickHandler = useCallback(() => props.changeFilter(props.todolistId, "all"), [props.changeFilter, props.todolistId]);
@@ -42,9 +42,8 @@ export const Todolist = React.memo((props: TodolistProps) => {
     }, [props.addTask, props.todolistId])
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(fetchTasksTC(props.todolistId))
-    })
+    }, [])
 
 
 

@@ -40,7 +40,6 @@ export enum TaskPriorities {
     Later = 4
 }
 
-
 export type TaskType = {
     description: string
     title: string
@@ -84,7 +83,7 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
     updateTodolistTitle(id: string, title: string) {
-
+debugger
         return instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
     },
     getTasks(todolistId: string) {

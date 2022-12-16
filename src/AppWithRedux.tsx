@@ -14,8 +14,7 @@ import {
     removeTodolistsTC,
     TodolistDomainType,
 } from "./state/todolists-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "./state/store";
+import {AppDispatch, useAppSelector} from "./state/store";
 import {TaskType} from "./api/todolists-API";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "./state/tasks-reducer";
 
@@ -27,12 +26,11 @@ export type TasksStateType = {
 
 function AppWithRedux() {
     console.log("AppWithRedux is called")
-    const dispatch = useDispatch()
-    const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
+    const dispatch = AppDispatch()
+    const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
+
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -42,43 +40,36 @@ function AppWithRedux() {
 
     let removeTodolist = useCallback((todolistId: string) => {
         const thunk = removeTodolistsTC(todolistId)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
     let changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
         const thunk = changeTodolistTitleTC(todolistId, newTitle)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
         const thunk = addTodolistsTC(title)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
     const addTask = useCallback((title: string, todolistId: string) => {
         const thunk = addTaskTC(title, todolistId)
-        // @ts-ignore
         dispatch(thunk)
     }, [])
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
         const thunk = updateTaskTC(id, {title: newTitle}, todolistId);
-        // @ts-ignore
         dispatch(thunk);
     }, []);
 
-    const changeCompleted = useCallback(function (id: string, completed: boolean, todolistId: string) {
-        const thunk = updateTaskTC(id, {completed}, todolistId);
-        // @ts-ignore
+    const changeStatus = useCallback(function (id: string, status: number, todolistId: string) {
+        const thunk = updateTaskTC(id, {status}, todolistId);
         dispatch(thunk);
     }, []);
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
         const thunk = removeTaskTC(id, todolistId)
-        // @ts-ignore
         dispatch(thunk)
     }, []);
     return (
@@ -108,13 +99,12 @@ function AppWithRedux() {
                                 <Todolist title={tl.title}
                                           key={tl.id}
                                           todolistId={tl.id}
-                                          xz={100200}
                                           changeFilter={changeFilter}
                                           filter={tl.filter}
                                           removeTodolist={removeTodolist}
                                           changeTodolistTitle={changeTodolistTitle}
                                           changeTaskTitle={changeTaskTitle}
-                                          changeTaskStatus={changeCompleted}
+                                          changeTaskStatus={changeStatus}
                                           removeTask={removeTask}
                                           addTask={addTask}
                                 />
