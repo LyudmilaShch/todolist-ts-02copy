@@ -1,16 +1,14 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditanleSpan";
+import '../../../app/App.css';
+import {AddItemForm} from "../../../components/addItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/editableSpan/EditanleSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType, useAppSelector} from "./state/store";
-import {addTaskAC, fetchTasksTC} from "./state/tasks-reducer";
-import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "./api/todolists-API";
-import {FilterValuesType} from "./state/todolists-reducer";
-import {TasksStateType} from "./AppWithRedux";
+import {AppDispatch, useAppSelector} from "../../../app/store";
+import {fetchTasksTC} from "./task/tasks-reducer";
+import {Task} from "./task/Task";
+import {TaskStatuses, TaskType} from "../../../api/todolists-API";
+import {FilterValuesType} from "../todolists-reducer";
 
 export type TodolistProps = {
     title: string,
@@ -30,9 +28,8 @@ export const Todolist = React.memo((props: TodolistProps) => {
     const tasks = useAppSelector<Array<TaskType>>(state => state.tasks[props.todolistId])
     const dispatch = AppDispatch()
 
-
     const onAllClickHandler = useCallback(() => props.changeFilter(props.todolistId, "all"), [props.changeFilter, props.todolistId]);
-    const onaAtiveClickHandler = useCallback(() => props.changeFilter(props.todolistId, "active"), [props.changeFilter, props.todolistId]);
+    const onActiveClickHandler = useCallback(() => props.changeFilter(props.todolistId, "active"), [props.changeFilter, props.todolistId]);
     const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todolistId, "completed"), [props.changeFilter, props.todolistId]);
     const removeTodolist = useCallback(() => {
         props.removeTodolist(props.todolistId);
@@ -86,7 +83,7 @@ export const Todolist = React.memo((props: TodolistProps) => {
                     onClick={onAllClickHandler}>All
                 </Button>
                 <Button color={"primary"} variant={props.filter === 'active' ? "contained" : "text"}
-                        onClick={onaAtiveClickHandler}>Active
+                        onClick={onActiveClickHandler}>Active
                 </Button>
                 <Button color={"secondary"} variant={props.filter === 'completed' ? "contained" : "text"}
                         onClick={onCompletedClickHandler}>Completed

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-API";
+import {TaskType, todolistsAPI, UpdateTaskModelType} from "./todolists-API";
 
 export default {
     title: 'API'
@@ -190,7 +190,6 @@ export const UpdateTask = () => {
     const getTask = () => {
         setTask(state.items.find((el: { id: any; }) => el.id === taskId))
     }
-
     const updateTask = () => {
         todolistsAPI.updateTask(todolistId, taskId, task)
             .then((res) => {

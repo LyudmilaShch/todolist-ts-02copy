@@ -1,7 +1,6 @@
-import { TasksStateType } from "../AppWithRedux"
-import {TaskPriorities, TaskStatuses} from "../api/todolists-API";
-import { SetTodolistAC } from "./todolists-reducer";
-import {tasksReducer} from "./tasks-reducer";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolists-API";
+import { setTodolistAC } from "../../todolists-reducer";
+import {tasksReducer, TasksStateType} from "./tasks-reducer";
 
 
 let startState: TasksStateType = {}
@@ -95,7 +94,7 @@ beforeEach(() => {
 test('empty arrays should be added when we set todolists', () => {
 
 
-    const action = SetTodolistAC([
+    const action = setTodolistAC([
         {id: "todolistId1", title: "What to learn", order: 0, addedDate: ""},
         {id: "todolistId2", title: "What to buy", order: 0, addedDate: ""}
     ])
