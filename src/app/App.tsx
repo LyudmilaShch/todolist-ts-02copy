@@ -1,15 +1,24 @@
 import React from 'react';
 import './App.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import {AppBar, Button, Container, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {TodolistList} from "../features/todoLists/Todolists";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import { StatusType } from './app-reducer';
 
+type PropsType = {
+    demo?: boolean
+}
 
-function App() {
-    console.log("App is called")
+function App({demo = false}: PropsType) {
+    const status = useSelector<AppRootStateType, StatusType>((state) => state.app.status)
+
     return (
         <div className="App">
+            <ErrorSnackbar />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -20,9 +29,10 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
-                <TodolistList/>
+                <TodolistList demo={demo}/>
             </Container>
         </div>
     )

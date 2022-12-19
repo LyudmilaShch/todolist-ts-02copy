@@ -3,16 +3,18 @@ import {TasksActionsTypes, tasksReducer} from "../features/todoLists/todolist/ta
 import {TodolistActionsTypes, todolistsReducer} from "../features/todoLists/todolists-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {ActionTypes, appReducer} from "./app-reducer";
 
 const rootReducer = combineReducers({
-    todolists: todolistsReducer,
-    tasks: tasksReducer
+    todoLists: todolistsReducer,
+    tasks: tasksReducer,
+    app: appReducer
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 //все типы экшенов для всего app
-export type AppActionsType = TodolistActionsTypes | TasksActionsTypes
+export type AppActionsType = TodolistActionsTypes | TasksActionsTypes | ActionTypes
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
 type AppDispatchType = ThunkDispatch<AppRootStateType, any, AppActionsType>

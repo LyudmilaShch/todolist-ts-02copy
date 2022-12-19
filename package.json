@@ -1,10 +1,12 @@
 {
+
   "name": "it-incubator-todolist-ts",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -14,6 +16,7 @@
     "@types/react-dom": "^18.0.9",
     "@types/react-redux": "^7.1.24",
     "@types/uuid": "^9.0.0",
+    "antd": "^5.0.7",
     "axios": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -80,5 +83,8 @@
     "storybook-addon-live-examples": "^1.0.9",
     "ts-jest": "^29.0.3",
     "webpack": "^5.75.0"
+  },
+  "transform": {
+    "\\.js$": "<rootDir>/node_modules/babel-jest"
   }
 }
