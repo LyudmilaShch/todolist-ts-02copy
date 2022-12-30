@@ -28,6 +28,10 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
     const tasks = useAppSelector<Array<TaskType>>(state => state.tasks[props.todolist.id])
     const dispatch = AppDispatch()
 
+
+
+
+
     const onAllClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "all"), [props.changeFilter, props.todolist.id]);
     const onActiveClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "active"), [props.changeFilter, props.todolist.id]);
     const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "completed"), [props.changeFilter, props.todolist.id]);
@@ -45,8 +49,6 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
         dispatch(fetchTasksTC(props.todolist.id))
     }, [])
 
-
-
     const changeTodolistTitle = useCallback((newTitle: string) => {
 
         props.changeTodolistTitle(props.todolist.id, newTitle);
@@ -60,6 +62,7 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
     if (props.todolist.filter === "active") {
         tasksForTodolist = allTodolistTasks.filter(t => t.status  === TaskStatuses.New)
     }
+
     return (
         <div>
             <h3><EditableSpan title={props.todolist.title} onChange={changeTodolistTitle}/>

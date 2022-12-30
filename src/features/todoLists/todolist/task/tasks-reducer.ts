@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 import {AppActionsType, AppRootStateType} from "../../../../app/store";
 import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkAppError} from "../../../../utils/errorUtils";
+import {AuthActionsTypes, setIsLoginIn} from "../../../Login/auth-reducer";
 
 const initialState: TasksStateType = {}
 
@@ -102,10 +103,10 @@ export const updateTaskTC = (id: string, domainModel: UpdateDomainTaskModelType,
                 if (res.data.resultCode === 0) {
                     const action = updateTaskAC(id, domainModel, todolistId);
                     dispatch(action)
-                }  else {
+                } else {
                     handleServerAppError(res.data, dispatch)
                 }
-                })
+            })
 
             .catch((error) => {
                 handleServerNetworkAppError(error, dispatch)
@@ -132,6 +133,7 @@ export type TasksActionsTypes =
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistActionType
+    | AuthActionsTypes
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
