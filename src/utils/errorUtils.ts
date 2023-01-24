@@ -1,6 +1,5 @@
 import {setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
 import {ResponseType} from "../api/todolists-API";
-import {AppActionsType} from "../app/store";
 import { Dispatch } from "@reduxjs/toolkit";
 
 
