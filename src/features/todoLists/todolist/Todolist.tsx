@@ -28,10 +28,6 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
     const tasks = useAppSelector<Array<TaskType>>(state => state.tasks[props.todolist.id])
     const dispatch = AppDispatch()
 
-
-
-
-
     const onAllClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "all"), [props.changeFilter, props.todolist.id]);
     const onActiveClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "active"), [props.changeFilter, props.todolist.id]);
     const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todolist.id, "completed"), [props.changeFilter, props.todolist.id]);

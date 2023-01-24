@@ -94,10 +94,12 @@ beforeEach(() => {
 test('empty arrays should be added when we set todolists', () => {
 
 
-    const action = setTodolistAC([
-        {id: "todolistId1", title: "What to learn", order: 0, addedDate: ""},
-        {id: "todolistId2", title: "What to buy", order: 0, addedDate: ""}
-    ])
+    const action = setTodolistAC({
+        todoLists: [
+            {id: "todolistId1", title: "What to learn", order: 0, addedDate: ""},
+            {id: "todolistId2", title: "What to buy", order: 0, addedDate: ""}
+        ]
+    })
 
     const endState = tasksReducer({}, action)
 

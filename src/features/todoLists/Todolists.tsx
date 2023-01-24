@@ -12,13 +12,14 @@ import {addTaskTC, removeTaskTC, updateTaskTC} from "./todolist/task/tasks-reduc
 import {Grid, Paper} from "@material-ui/core";
 import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import {Todolist} from "./todolist/Todolist";
+import {useAppDispatch} from "../../hooks/hooks";
 
 type TodoListPropsType = {
     demo?: boolean
 }
 
 export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
-    const dispatch = AppDispatch()
+    const dispatch = useAppDispatch()
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todoLists)
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
     }, [])
 
     const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC(value, todolistId));
+        dispatch(changeTodolistFilterAC({filter: value, id: todolistId }));
     }, [dispatch])
 
     let removeTodolist = useCallback((todolistId: string) => {
