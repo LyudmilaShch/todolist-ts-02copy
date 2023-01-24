@@ -6,21 +6,23 @@ import {Menu} from "@material-ui/icons";
 import {TodolistList} from "../features/todoLists/Todolists";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "./store";
-import {initializedAppTC, StatusType} from './app-reducer';
+import {AppRootStateType, useAppSelector} from "./store";
+import {initializedAppTC} from './app-reducer';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {logoutTC} from "../features/Login/auth-reducer";
+import {useAppDispatch} from "../hooks/hooks";
+import {statusSelector} from "../selectors/selectors";
 
 type PropsType = {
     demo?: boolean
 }
 
 function App({demo = false}: PropsType) {
-    const status = useSelector<AppRootStateType, StatusType>((state) => state.app.status)
+    const status = useAppSelector(statusSelector)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     const isLoginIn = useSelector<AppRootStateType, boolean> (state => state.auth.isLoginIn)
-    const dispatch = AppDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializedAppTC())

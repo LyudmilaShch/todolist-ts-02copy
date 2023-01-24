@@ -38,11 +38,13 @@ export const changeTodolistStatusAC = (id: string, status: StatusType) =>
 
 // thunks
 export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    // @ts-ignore
+    dispatch(setAppStatusAC({status:'loading'}))
     todolistsAPI.getTodolists()
         .then(res => {
             dispatch(setTodolistAC(res.data))
-            dispatch(setAppStatusAC('succeeded'))
+            // @ts-ignore
+            dispatch(setAppStatusAC({status:'succeeded'}))
         })
         .catch(error => {
             handleServerNetworkAppError(error, dispatch)
@@ -50,20 +52,24 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
 }
 
 export const removeTodolistsTC = (todolistId: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    // @ts-ignore
+    dispatch(setAppStatusAC({status:'loading'}))
     dispatch(changeTodolistStatusAC(todolistId, 'loading'))
     todolistsAPI.deleteTodolist(todolistId)
         .then(res => {
             dispatch(removeTodolistAC(todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            // @ts-ignore
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         })
 }
 export const addTodolistsTC = (title: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    // @ts-ignore
+    dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.createTodolist(title)
         .then(res => {
             dispatch(addTodolistAC(res.data.data.item))
-            dispatch(setAppStatusAC('succeeded'))
+            // @ts-ignore
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         })
 }
 export const changeTodolistTitleTC = (todolistId: string, newTitle: string): AppThunk => (dispatch) => {

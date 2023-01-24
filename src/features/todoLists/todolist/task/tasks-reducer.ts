@@ -4,7 +4,7 @@ import {Dispatch} from "redux";
 import {AppActionsType, AppRootStateType} from "../../../../app/store";
 import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkAppError} from "../../../../utils/errorUtils";
-import {AuthActionsTypes, setIsLoginIn} from "../../../Login/auth-reducer";
+import {setIsLoginIn} from "../../../Login/auth-reducer";
 
 const initialState: TasksStateType = {}
 
@@ -49,11 +49,13 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<AppActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
+    // @ts-ignore
+    dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(res.data.items, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            // @ts-ignore
+            dispatch(setAppStatusAC({status:'succeeded'}))
         })
 }
 export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch<AppActionsType>) => {
@@ -64,13 +66,16 @@ export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispa
         })
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<AppActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
+
+    // @ts-ignore
+    dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 const action = addTaskAC(res.data.data.item);
                 dispatch(action)
-                dispatch(setAppStatusAC('succeeded'))
+                // @ts-ignore
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -133,7 +138,6 @@ export type TasksActionsTypes =
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistActionType
-    | AuthActionsTypes
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
