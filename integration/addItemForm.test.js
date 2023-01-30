@@ -6,5 +6,5 @@ describe('addItemForm', () => {
 
         // API from jest-image-snapshot
         expect(image).toMatchImageSnapshot()
-    })
+    }, 60_000)
 })

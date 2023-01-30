@@ -18,15 +18,15 @@ type TodoListPropsType = {
     demo?: boolean
 }
 
-export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
+export const TodolistList: React.FC<TodoListPropsType> = ({demo = true}) => {
     const dispatch = useAppDispatch()
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todoLists)
 
     useEffect(() => {
-        if (demo) {
-            return
+        if (!demo) {
+            dispatch(fetchTodolistsTC())
         }
-        dispatch(fetchTodolistsTC())
+
     }, [])
 
     const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
@@ -36,7 +36,7 @@ export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
     let removeTodolist = useCallback((todolistId: string) => {
         const thunk = removeTodolistsTC(todolistId)
         dispatch(thunk)
-    }, [dispatch])
+    }, [])
 
     let changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
         const thunk = changeTodolistTitleTC(todolistId, newTitle)

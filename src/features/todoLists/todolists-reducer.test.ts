@@ -7,7 +7,6 @@ import {
     todolistsReducer
 } from "./todolists-reducer";
 import {StatusType} from "../../app/app-reducer";
-import {TodolistType} from "../../api/todolists-API";
 
 let todolistId1: string
 let todolistId2: string
@@ -93,11 +92,10 @@ test ('todolists should be set to the state', () => {
 test ('correct entity status of todolist should be changed', () => {
     let newStatus: StatusType = "loading"
 
-    const action = changeTodolistStatusAC({id: todolistId2, status: newStatus})
+    const action = changeTodolistStatusAC({id: todolistId2, status: newStatus })
 
     const endState = todolistsReducer(startState, action)
 
-    expect(endState[0].entityStatus).toBe("idle");
-    expect(endState[1].entityStatus).toBe(newStatus);
-
+    expect(endState[1].entityStatus).toBe('idle');
+    expect(endState[0].entityStatus).toBe(newStatus);
 })

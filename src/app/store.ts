@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
     auth: authReducer
 });
 
+export type RootReducerType = typeof rootReducer
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 //все типы экшенов для всего app

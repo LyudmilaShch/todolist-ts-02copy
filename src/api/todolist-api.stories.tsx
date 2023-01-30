@@ -8,12 +8,13 @@ export default {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.getTodolists()
-            .then((res) => {
-                setState(res.data)
-            })
-
-    }, [])
+        // todolistsAPI.getTodolists()
+        //     .catch((res) => {
+                setState([
+                    {id: 'todolistId1', title: "What to learn", filter: "all", order: 0, addedDate: "", entityStatus: "idle"},
+                    {id: 'todolistId2', title: "What to buy", filter: "all", order: 0, addedDate: "", entityStatus: "loading"}
+                ])
+            }, [])
     return <div>{JSON.stringify(state)}</div>
 }
 export const CreateTodolist = () => {

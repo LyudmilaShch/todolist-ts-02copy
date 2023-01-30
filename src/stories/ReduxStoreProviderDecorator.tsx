@@ -1,17 +1,18 @@
 import {tasksReducer} from "../features/todoLists/todolist/task/tasks-reducer";
 import React from 'react';
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import { v1 } from 'uuid'
+import {v1} from 'uuid'
 import {todolistsReducer} from "../features/todoLists/todolists-reducer";
-import {AppRootStateType} from "../app/store";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-API";
-import { appReducer } from "../app/app-reducer";
+import {appReducer} from "../app/app-reducer";
 import thunk from "redux-thunk";
 import {authReducer} from "../features/Login/auth-reducer";
+import {AppRootStateType, RootReducerType} from "../app/store";
+import {BrowserRouter} from "react-router-dom";
 
 
-const rootReducer = combineReducers({
+const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,
     todoLists: todolistsReducer,
     app: appReducer,
@@ -43,12 +44,12 @@ const initialGlobalState = {
             ]
         },
     app: {
-        status: 'idle',
+        status: 'succeeded',
         error: null,
-        isInitialized: false
+        isInitialized: true
     },
     auth: {
-        isLoginIn: false
+        isLoginIn: true
     }
 }
 
@@ -58,3 +59,8 @@ export const ReduxStoreProviderDecorator = (storyFn: any) => (
     <Provider
         store={storyBookStore}>{storyFn()}
     </Provider>)
+
+export const BrowserRouterDecorator = (storyFn: any) => (
+    <BrowserRouter>
+        {storyFn()}
+    </BrowserRouter>)

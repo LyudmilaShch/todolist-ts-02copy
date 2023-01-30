@@ -112,22 +112,20 @@ test('correct task should be deleted from correct array', () => {
 })
 
 test('correct task should be added to correct array', () => {
-
-    const action = addTaskAC({
-        task: {
-            todoListId: "todolistId2",
-            title: "juce",
-            status: TaskStatuses.New,
-            addedDate: "",
-            deadline: "",
-            order: 0,
-            priority: 0,
-            startDate: "",
-            id: "id exists",
-            completed: false,
-            description: " "
-        }
-    })
+    let task = {
+        todoListId: "todolistId2",
+        title: "juce",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: 0,
+        startDate: "",
+        id: "id exists",
+        completed: false,
+        description: " "
+    };
+    const action = addTaskAC(task)
 
     const endState = tasksReducer(startState, action)
 
@@ -160,7 +158,7 @@ test('status of specified task should be changed', () => {
 test('new property with new array should be added when new todolist is added', () => {
     const action = addTodolistAC({
             todolist: {
-                id: "todolistId1",
+                id: "blabla",
                 title: 'new todolist',
                 addedDate: "",
                 order: 0
@@ -169,7 +167,6 @@ test('new property with new array should be added when new todolist is added', (
     )
 
     const endState = tasksReducer(startState, action)
-
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')
@@ -209,7 +206,7 @@ test('empty arrays should be added when we set todolists', () => {
 
     const keys = Object.keys(endState)
 
-    expect(keys.length).toBe(1)
+    expect(keys.length).toBe(2)
     expect(endState['todolistId1']).toStrictEqual([])
     expect(endState['todolistId2']).toStrictEqual([])
 })
@@ -227,6 +224,5 @@ test('tasks should be added for todolist', () => {
 
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(0)
-
 })
 
