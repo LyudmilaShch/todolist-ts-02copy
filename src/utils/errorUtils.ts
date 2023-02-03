@@ -4,7 +4,6 @@ import { Dispatch } from "@reduxjs/toolkit";
 
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
-    debugger
     if (data.messages.length) {
         dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {

@@ -3,7 +3,7 @@ import axios from 'axios'
 const settings = {
     withCredentials: true,
     headers: {
-        "API-KEY": "ea3d9034-c1d2-4af3-a252-178ff469f42f"
+        "API-KEY": "51d9ed61-5ad6-4592-a3bb-8a8eac3e6984"
     }
 }
 const instance = axios.create({
@@ -95,9 +95,12 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
+export type FieldErrorType = { field: string; error: string }
+
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>,
+    fieldsErrors?: Array<FieldErrorType>,
     data: D
 } //дженерик тип
 export enum TaskStatuses {
