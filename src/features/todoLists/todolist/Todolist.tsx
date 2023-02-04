@@ -54,9 +54,8 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
         tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.Completed)
     }
     if (props.todolist.filter === "active") {
-        tasksForTodolist = allTodolistTasks.filter(t => t.status  === TaskStatuses.New)
+        tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.New)
     }
-
     return (
         <div>
             <h3><EditableSpan title={props.todolist.title} onChange={changeTodolistTitle}/>

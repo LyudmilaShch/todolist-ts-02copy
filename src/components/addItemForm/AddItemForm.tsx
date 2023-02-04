@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
@@ -8,7 +8,6 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) => {
-    console.log("AddItemForm is called")
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
     const addTaskHandler = () => {

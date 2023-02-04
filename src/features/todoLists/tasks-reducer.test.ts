@@ -1,10 +1,8 @@
 import {
-    addTaskAC,
     tasksReducer,
-    updateTaskAC,
-    TasksStateType, fetchTasksTC, removeTaskTC
+    TasksStateType, fetchTasksTC, removeTaskTC, addTaskTC, updateTaskTC
 } from './todolist/task/tasks-reducer'
-import {addTodolistAC, removeTodolistAC, setTodolistAC} from './todolists-reducer'
+import {addTodolistsTC, fetchTodolistsTC, removeTodolistsTC} from './todolists-reducer'
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-API";
 
 let startState: TasksStateType = {}
@@ -97,7 +95,7 @@ beforeEach(() => {
 
 
 test('correct task should be deleted from correct array', () => {
-let param = {taskId: '2', todolistId: 'todolistId2'}
+    let param = {taskId: '2', todolistId: 'todolistId2'}
     const action = removeTaskTC.fulfilled(param, 'requestId', param)
 
     const endState = tasksReducer(startState, action)
@@ -123,7 +121,7 @@ test('correct task should be added to correct array', () => {
         completed: false,
         description: " "
     };
-    const action = addTaskAC(task)
+    const action = addTaskTC.fulfilled(task, 'request1', {title: task.title, todolistId: task.todoListId})
 
     const endState = tasksReducer(startState, action)
 
@@ -135,34 +133,34 @@ test('correct task should be added to correct array', () => {
 })
 
 test('status of specified task should be changed', () => {
+    let updateModel = {taskId: '2', model: {completed: false}, todolistId: 'todolistId2'}
 
-    const action = updateTaskAC({taskId: '2', model: {completed: false}, todolistId: 'todolistId2'})
-
+    const action = updateTaskTC.fulfilled(updateModel, 'requestId', updateModel)
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId2'][1].completed).toBeFalsy()
     expect(endState['todolistId1'][1].completed).toBeTruthy()
 })
 
-// test('title of specified task should be changed', () => {
-//     const action = changeTaskTitleAC('2', 'MilkyWay', 'todolistId2')
-//
-//     const endState = tasksReducer(startState, action)
-//
-//     expect(endState['todolistId2'][1].title).toBe('MilkyWay')
-//     expect(endState['todolistId1'][1].title).toBe('JS')
-// })
+test('title of specified task should be changed', () => {
+    let updateModel = {taskId: '2', model: {title: 'MilkyWay'}, todolistId: 'todolistId2'}
+    const action = updateTaskTC.fulfilled(updateModel, 'requestId', updateModel)
+    const endState = tasksReducer(startState, action)
+
+    expect(endState['todolistId2'][1].title).toBe('MilkyWay')
+    expect(endState['todolistId1'][1].title).toBe('JS')
+})
 
 test('new property with new array should be added when new todolist is added', () => {
-    const action = addTodolistAC({
-            todolist: {
-                id: "blabla",
-                title: 'new todolist',
-                addedDate: "",
-                order: 0
-            }
+    let payload = {
+        todolist: {
+            id: "blabla",
+            title: 'new todolist',
+            addedDate: "",
+            order: 0
         }
-    )
+    }
+    const action = addTodolistsTC.fulfilled(payload, 'reqoestId',  'new todolist')
 
     const endState = tasksReducer(startState, action)
 
@@ -177,13 +175,9 @@ test('new property with new array should be added when new todolist is added', (
 })
 
 test('property with todolistId should be deleted', () => {
-
-
-    const action = removeTodolistAC({id: 'todolistId2'})
+    const action = removeTodolistsTC.fulfilled({id: 'todolistId2'}, 'requestId', 'todolistId2')
 
     const endState = tasksReducer(startState, action)
-
-
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(1)
@@ -192,14 +186,13 @@ test('property with todolistId should be deleted', () => {
 
 
 test('empty arrays should be added when we set todolists', () => {
-
-
-    const action = setTodolistAC({
+    let payload = {
         todoLists: [
             {id: "todolistId1", title: "What to learn", order: 0, addedDate: ""},
             {id: "todolistId2", title: "What to buy", order: 0, addedDate: ""}
         ]
-    })
+    }
+    const action = fetchTodolistsTC.fulfilled(payload, 'requestId')
 
     const endState = tasksReducer({}, action)
 

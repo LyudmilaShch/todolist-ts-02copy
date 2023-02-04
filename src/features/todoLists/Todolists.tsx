@@ -44,7 +44,7 @@ export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
     }, [])
 
     let changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
-        const thunk = changeTodolistTitleTC(todolistId, newTitle)
+        const thunk = changeTodolistTitleTC({id: todolistId, title: newTitle})
         dispatch(thunk)
     }, [dispatch])
 
@@ -54,17 +54,17 @@ export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
     }, [dispatch])
 
     const addTask = useCallback((title: string, todolistId: string) => {
-        const thunk = addTaskTC(title, todolistId)
+        const thunk = addTaskTC({title, todolistId})
         dispatch(thunk)
     }, [])
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        const thunk = updateTaskTC(id, {title: newTitle}, todolistId);
+        const thunk = updateTaskTC({taskId: id, model: {title: newTitle}, todolistId});
         dispatch(thunk);
     }, []);
 
     const changeStatus = useCallback(function (id: string, status: number, todolistId: string) {
-        const thunk = updateTaskTC(id, {status}, todolistId);
+        const thunk = updateTaskTC({taskId: id, model: {status}, todolistId});
         dispatch(thunk);
     }, []);
 
