@@ -1,16 +1,15 @@
 import React, {useCallback, useEffect} from "react";
-import {useAppSelector} from "../../app/store";
 import {
     TodolistDomainType
 } from "./todolists-reducer";
-import {Grid, Paper} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import {AddItemForm, AddItemFormSubmitHelperType} from "../../components/addItemForm/AddItemForm";
 import {Todolist} from "./todolist/Todolist";
 import {useAppDispatch} from "../../hooks/hooks";
 import {Navigate} from 'react-router-dom';
 import {isLoginInSelector} from "../Auth/selectors";
-import {useActions} from "../../hooks/useActions";
 import {tasksActions, todolistsActions} from "./index";
+import {useActions, useAppSelector} from "../../utils/redux-utils";
 
 
 type TodoListPropsType = {
@@ -28,10 +27,10 @@ export const TodolistList: React.FC<TodoListPropsType> = ({demo = false}) => {
     const dispatch = useAppDispatch()
 
     const addTodolistCallBack = useCallback(async (title: string, helper?: AddItemFormSubmitHelperType) => {
-        let thunk = addTodolistsTC(title)
+        let thunk = todolistsActions.addTodolistsTC(title)
         const resultAction = await dispatch(thunk);
 
-        if (tasksActions.addTask.rejected.match(resultAction)) {
+        if (todolistsActions.addTodolistsTC.rejected.match(resultAction)) {
             if (resultAction.payload?.errors?.length){
                 const errorMessage = resultAction.payload?.errors[0];
                 helper?.setError(errorMessage)

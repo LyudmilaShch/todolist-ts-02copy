@@ -1,24 +1,26 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
-import {AppDispatch, useAppSelector} from "../../app/store";
-import {setAppErrorAC} from "../../app/app-reducer";
+import {appActions} from "../../features/CommonActions/App";
 import {errorSelector} from "../../app/selectors";
-import {useAppDispatch} from "../../hooks/hooks";
+import {useActions} from "../../utils/redux-utils";
+import { useSelector } from 'react-redux';
+
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export function ErrorSnackbar() {
-    const error = useAppSelector(errorSelector)
-    const dispatch = useAppDispatch()
+    const error = useSelector(errorSelector)
+
+    const {setAppError} = useActions(appActions)
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        dispatch(setAppErrorAC({error: null}))
+        setAppError({error: null})
     };
 
 

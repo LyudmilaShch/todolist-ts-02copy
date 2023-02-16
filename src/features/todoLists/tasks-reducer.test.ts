@@ -1,13 +1,10 @@
-import {
-    tasksReducer,
-    TasksStateType
-} from './tasks-reducer'
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-API";
-import {useActions} from "../../hooks/useActions";
+import {slice, TasksStateType} from './tasks-reducer'
 import {tasksActions, todolistsActions} from "./index";
+import {TaskPriorities, TaskStatuses} from '../../api/types';
 
-const {addTask, updateTask, removeTask, fetchTasks} = useActions(tasksActions)
-const {removeTodolistTC, addTodolistsTC, fetchTodolistsTC } = useActions(todolistsActions)
+const {reducer: tasksReducer} = slice
+const {addTask, updateTask, removeTask, fetchTasks} = tasksActions
+const {removeTodolistTC, addTodolistsTC, fetchTodolistsTC} = todolistsActions
 
 let startState: TasksStateType = {}
 beforeEach(() => {
@@ -196,7 +193,7 @@ test('empty arrays should be added when we set todolists', () => {
             {id: "todolistId2", title: "What to buy", order: 0, addedDate: ""}
         ]
     }
-    const action = fetchTodolistsTC.fulfilled(payload, 'requestId')
+    const action = fetchTodolistsTC.fulfilled(payload, 'requestId', undefined)
 
     const endState = tasksReducer({}, action)
 

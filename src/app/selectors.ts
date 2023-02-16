@@ -1,10 +1,8 @@
-import { createSelector } from '@reduxjs/toolkit'
-import {AppRootStateType} from "./store";
+import {AppRootStateType} from "../utils/types";
 
 
-const state = (state: AppRootStateType) => state
+export const statusSelector = (state: AppRootStateType) => state.app.status
+export const isInitializedSelector = (state: AppRootStateType) => state.app.isInitialized
 
-export const statusSelector = createSelector(state, state => state.app.status)
-export const isInitializedSelector = createSelector(state, state => state.app.isInitialized)
+export const errorSelector = (state: AppRootStateType) => state.app.error
 
-export const errorSelector = createSelector(state, state => state.app.error)

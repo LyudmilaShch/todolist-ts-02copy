@@ -4,15 +4,12 @@ import {AddItemForm, AddItemFormSubmitHelperType} from "../../../components/addI
 import {EditableSpan} from "../../../components/editableSpan/EditanleSpan";
 import {Button, IconButton, Paper, PropTypes} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {AppDispatch, useAppSelector} from "../../../app/store";
 import {Task} from "./task/Task";
-import {TaskStatuses, TaskType} from "../../../api/todolists-API";
 import {FilterValuesType, TodolistDomainType} from "../todolists-reducer";
-import {useActions} from "../../../hooks/useActions";
 import {tasksActions, todolistsActions} from "../index";
-import {authActions} from "../../Auth";
 import {useAppDispatch} from "../../../hooks/hooks";
-import {loginTC} from "../../Auth/auth-reducer";
+import {TaskStatuses, TaskType} from "../../../api/types";
+import {useActions, useAppSelector} from '../../../utils/redux-utils';
 
 export type TodolistProps = {
     todolist: TodolistDomainType
@@ -21,7 +18,7 @@ export type TodolistProps = {
 
 export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => {
     const tasks = useAppSelector<Array<TaskType>>(state => state.tasks[props.todolist.id])
-    const {addTask, updateTask, removeTask, fetchTasks} = useActions(tasksActions)
+    const {fetchTasks} = useActions(tasksActions)
     const {
         changeTodolistFilter, removeTodolistTC, changeTodolistTitleTC
     } = useActions(todolistsActions)
@@ -83,9 +80,9 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
 
     return (
         <Paper  style={{padding: '10px', position:'relative'}}>
-            <IconButton onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}
+            <IconButton size={'small'} onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}
             style={{position:'absolute', right: '3px', top:'3px'}}>
-                <Delete/>
+                <Delete fontSize={'small'}/>
             </IconButton>
             <h3>
                 <EditableSpan title={props.todolist.title} onChange={changeTodolistTitle}/>

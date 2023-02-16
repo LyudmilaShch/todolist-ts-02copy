@@ -1,8 +1,9 @@
-import {TodolistDomainType, todolistsReducer} from "./todolists-reducer";
-import {tasksReducer, TasksStateType} from "./tasks-reducer";
-import {useActions} from "../../hooks/useActions";
-import {todolistsActions} from "./index";
-const {addTodolistsTC } = useActions(todolistsActions)
+import {slice, TodolistDomainType} from "./todolists-reducer";
+import {slice as tasksSlice, TasksStateType} from "./tasks-reducer";
+import { todolistsActions} from "./index";
+
+const todolistsReducer = slice.reducer
+const tasksReducer = tasksSlice.reducer
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistsState: Array<TodolistDomainType> = []
@@ -15,7 +16,7 @@ test('ids should be equals', () => {
         }
     }
 
-    const action = addTodolistsTC.fulfilled(payload, 'requestId', 'new todolist')
+    const action = todolistsActions.addTodolistsTC.fulfilled(payload, 'requestId', 'new todolist')
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)

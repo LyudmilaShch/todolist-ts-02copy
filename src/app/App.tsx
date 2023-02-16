@@ -5,14 +5,11 @@ import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Ty
 import {Menu} from "@material-ui/icons";
 import {TodolistList} from "../features/todoLists";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {useAppSelector} from "./store";
-import {asyncActions} from './app-reducer';
+import {appActions} from '../features/Application';
 import {Route, Routes} from "react-router-dom";
-import {Login, authSelectors} from "../features/Auth";
-import {logoutTC} from "../features/Auth/auth-reducer";
-import {useAppDispatch} from "../hooks/hooks";
+import {authSelectors, Login, authActions} from "../features/Auth";
 import {isInitializedSelector, statusSelector} from "./selectors";
-
+import {useActions, useAppSelector} from '../utils/redux-utils';
 
 type PropsType = {
     demo?: boolean
@@ -22,16 +19,18 @@ function App({demo = false}: PropsType) {
     const status = useAppSelector(statusSelector)
     const isInitialized = useAppSelector(isInitializedSelector)
     const isLoginIn = useAppSelector(authSelectors.isLoginInSelector)
-    const dispatch = useAppDispatch()
+
+    const {logout} = useActions(authActions)
+    const {initializedApp} = useActions(appActions)
 
     useEffect(() => {
-        if (!demo){
-            dispatch(asyncActions.initializedAppTC())
+        if (!demo) {
+            initializedApp()
         }
     }, [])
 
     const logoutHandler = useCallback(() => {
-        dispatch(logoutTC())
+        logout()
     }, [])
 
     if (!isInitialized) {
@@ -56,7 +55,7 @@ function App({demo = false}: PropsType) {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={"/login"} element={<Login />}/>
+                    <Route path={"/login"} element={<Login/>}/>
                     <Route path={"/"} element={<TodolistList demo={demo}/>}/>
                 </Routes>
             </Container>
