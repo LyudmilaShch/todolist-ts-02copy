@@ -1,8 +1,8 @@
 import {authAPI} from "../api/todolists-API";
-import {setIsLoginIn} from "../features/Login/auth-reducer";
+import {setIsLoginIn} from "../features/Auth/auth-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export const initializedAppTC = createAsyncThunk('app/initializedApp', async (param, {dispatch}) => {
+const initializedAppTC = createAsyncThunk('app/initializedApp', async (param, {dispatch}) => {
     const res = await authAPI.authMe()
     if (res.data.resultCode === 0) {
         dispatch(setIsLoginIn({value: true}))
@@ -10,6 +10,10 @@ export const initializedAppTC = createAsyncThunk('app/initializedApp', async (pa
 
     }
 })
+
+export const asyncActions = {
+    initializedAppTC
+}
 
 const slice = createSlice({
     name: "app",

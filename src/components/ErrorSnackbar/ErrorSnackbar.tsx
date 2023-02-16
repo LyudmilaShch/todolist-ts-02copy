@@ -3,7 +3,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {AppDispatch, useAppSelector} from "../../app/store";
 import {setAppErrorAC} from "../../app/app-reducer";
-import {errorSelector} from "../../selectors/selectors";
+import {errorSelector} from "../../app/selectors";
 import {useAppDispatch} from "../../hooks/hooks";
 
 function Alert(props: AlertProps) {

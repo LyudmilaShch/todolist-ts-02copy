@@ -10,10 +10,11 @@ import {
     TextField
 } from '@material-ui/core';
 import {FormikHelpers, useFormik} from "formik";
-import {AppDispatch, AppRootStateType} from "../../app/store";
-import {loginTC} from "./auth-reducer";
-import {useSelector} from "react-redux";
+import {AppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
+import {isLoginInSelector} from "./selectors";
+import {authActions} from "./index";
+import {useActions} from "../../hooks/useActions";
 
 type FormValuesType = {
     email: string,
@@ -23,7 +24,8 @@ type FormValuesType = {
 
 export const Login = () => {
     const dispatch = AppDispatch()
-    const isLoginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoginIn)
+    const isLoginIn = useAppSelector(isLoginInSelector)
+    const {loginTC} = useActions(authActions)
 
     const formik = useFormik({
         validate: (values) => {
@@ -45,7 +47,7 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-          const action = await dispatch(loginTC(values));
+          const action = await dispatch(authActions.loginTC(values));
 
           if (loginTC.rejected.match(action)) {
               if (action.payload?.fieldsErrors?.length){

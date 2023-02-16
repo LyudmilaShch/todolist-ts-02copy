@@ -1,8 +1,8 @@
 import {TaskPriorities, TaskStatuses} from "../../../../api/todolists-API";
-import {tasksReducer, TasksStateType} from "./tasks-reducer";
-import {fetchTodolistsTC} from "../../todolists-reducer";
-
-
+import {tasksReducer, TasksStateType} from "../../tasks-reducer";
+import {useActions} from "../../../../hooks/useActions";
+import {todolistsActions} from "../../index";
+const {fetchTodolistsTC } = useActions(todolistsActions)
 let startState: TasksStateType = {}
 beforeEach(() => {
     startState = {

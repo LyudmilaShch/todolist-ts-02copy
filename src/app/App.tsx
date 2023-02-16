@@ -3,16 +3,16 @@ import './App.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {TodolistList} from "../features/todoLists/Todolists";
+import {TodolistList} from "../features/todoLists";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {useSelector} from "react-redux";
-import {AppRootStateType, useAppSelector} from "./store";
-import {initializedAppTC} from './app-reducer';
+import {useAppSelector} from "./store";
+import {asyncActions} from './app-reducer';
 import {Route, Routes} from "react-router-dom";
-import {Login} from "../features/Login/Login";
-import {logoutTC} from "../features/Login/auth-reducer";
+import {Login, authSelectors} from "../features/Auth";
+import {logoutTC} from "../features/Auth/auth-reducer";
 import {useAppDispatch} from "../hooks/hooks";
-import {statusSelector} from "../selectors/selectors";
+import {isInitializedSelector, statusSelector} from "./selectors";
+
 
 type PropsType = {
     demo?: boolean
@@ -20,13 +20,13 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     const status = useAppSelector(statusSelector)
-    const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
-    const isLoginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoginIn)
+    const isInitialized = useAppSelector(isInitializedSelector)
+    const isLoginIn = useAppSelector(authSelectors.isLoginInSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!demo){
-            dispatch(initializedAppTC())
+            dispatch(asyncActions.initializedAppTC())
         }
     }, [])
 
@@ -56,7 +56,7 @@ function App({demo = false}: PropsType) {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={"/login"} element={<Login/>}/>
+                    <Route path={"/login"} element={<Login />}/>
                     <Route path={"/"} element={<TodolistList demo={demo}/>}/>
                 </Routes>
             </Container>

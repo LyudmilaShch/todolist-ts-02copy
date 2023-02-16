@@ -34,17 +34,21 @@ export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) 
             return;
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)
-            return thunkAPI.rejectWithValue({})
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (error) {
         if (error instanceof Error) {
             handleServerNetworkAppError(error, thunkAPI.dispatch)
-            return thunkAPI.rejectWithValue({})
+            return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
         }
     }
 })
 
-const slice = createSlice({
+export const asyncActions = {
+    loginTC, logoutTC
+}
+
+export const slice = createSlice({
     name: "auth",
     initialState: {
         isLoginIn: false

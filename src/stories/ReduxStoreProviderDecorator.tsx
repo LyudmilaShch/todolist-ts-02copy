@@ -1,4 +1,4 @@
-import {tasksReducer} from "../features/todoLists/todolist/task/tasks-reducer";
+import {tasksReducer} from "../features/todoLists/tasks-reducer";
 import React from 'react';
 import {Provider} from 'react-redux'
 import {applyMiddleware, combineReducers, createStore} from 'redux'
@@ -7,7 +7,7 @@ import {todolistsReducer} from "../features/todoLists/todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-API";
 import {appReducer} from "../app/app-reducer";
 import thunk from "redux-thunk";
-import {authReducer} from "../features/Login/auth-reducer";
+import {authReducer} from "../features/Auth/auth-reducer";
 import {AppRootStateType, RootReducerType} from "../app/store";
 import {BrowserRouter} from "react-router-dom";
 
