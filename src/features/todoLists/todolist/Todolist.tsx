@@ -41,7 +41,7 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
                 const errorMessage = resultAction.payload?.errors[0];
                 helper?.setError(errorMessage)
             } else {
-                helper?.setError("Some error occured")
+                helper?.setError("Some error occurred")
             }
         } else {
             helper?.setNewTaskTitle('')
@@ -52,7 +52,9 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
         if (demo) {
             return
         }
-        fetchTasks(props.todolist.id)
+        if (!tasks.length){
+            fetchTasks(props.todolist.id)
+        }
     }, [])
 
     const changeTodolistTitle = useCallback((newTitle: string) => {
@@ -88,7 +90,7 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
                 <EditableSpan title={props.todolist.title} onChange={changeTodolistTitle}/>
             </h3>
             <AddItemForm addItem={addTaskCallBack} disabled={props.todolist.entityStatus === 'loading'}/>
-            <ul>
+            {/*<ul>*/}
                 {
                     tasksForTodolist.map(t => <Task
                         task={t}
@@ -97,7 +99,7 @@ export const Todolist = React.memo(({demo = false, ...props}: TodolistProps) => 
                     />)
                 }
                 {!tasksForTodolist.length && <div style={{padding:'10px', color:'gray'}}>No tasks</div> }
-            </ul>
+            {/*</ul>*/}
             <div>
                 {renderFilterButton('default', 'all', 'All')}
                 {renderFilterButton('primary', 'active', 'Active')}

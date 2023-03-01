@@ -1,17 +1,9 @@
-import {combineReducers} from "redux";
-import {tasksReducer, todolistsReducer} from "../features/todoLists";
 import thunkMiddleware from "redux-thunk";
-import {appReducer} from "../features/Application";
-import {authReducer} from "../features/Auth";
 import {configureStore} from "@reduxjs/toolkit";
+import {rootReducer} from "./reducers";
 
-export const rootReducer = combineReducers({
-    todoLists: todolistsReducer,
-    tasks: tasksReducer,
-    app: appReducer,
-    auth: authReducer
-});
-
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(reducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 //export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export const store = configureStore({
@@ -20,10 +12,14 @@ export const store = configureStore({
 })
 
 
-
-
 // @ts-ignore
 window.store = store;
+
+if (process.env.NODE_ENV === 'development' && module.hot){
+    module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+    })
+}
 
 
 
